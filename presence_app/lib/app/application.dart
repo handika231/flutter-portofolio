@@ -8,7 +8,11 @@ class Application extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: "Application",
+      theme: ThemeData(
+        primarySwatch: Colors.lightGreen,
+      ),
+      debugShowCheckedModeBanner: false,
+      title: "Presence App",
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
     );
