@@ -7,6 +7,7 @@ class AddEmployeeController extends GetxController {
   late TextEditingController emailController;
   late TextEditingController nameController;
   late TextEditingController nipController;
+  final employeeFormKey = GlobalKey<FormState>();
 
   @override
   void onInit() {
@@ -25,7 +26,6 @@ class AddEmployeeController extends GetxController {
   }
 
   //form key
-  final formKey = GlobalKey<FormState>();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   Future addEmployee() async {
@@ -36,14 +36,16 @@ class AddEmployeeController extends GetxController {
         password: 'password',
       );
       String uid = userCredential.user!.uid;
-      firestore.collection('employee').doc(uid).set({
+      await firestore.collection('employee').doc(uid).set({
         'name': nameController.text,
         'nip': nipController.text,
         'email': emailController.text,
         'uid': uid,
         'createdAt': DateTime.now().toIso8601String(),
       });
-      print('success : $userCredential');
+      //send email verification
+      await userCredential.user!.sendEmailVerification();
+      Get.back();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         Get.defaultDialog(

@@ -18,7 +18,7 @@ class AddEmployeeView extends GetView<AddEmployeeController> {
           vertical: 30,
         ),
         child: Form(
-          key: controller.formKey,
+          key: controller.employeeFormKey,
           child: Column(
             children: [
               TextFormField(
@@ -49,6 +49,7 @@ class AddEmployeeView extends GetView<AddEmployeeController> {
                 validator: (value) =>
                     value!.isEmpty ? 'Please enter email' : null,
                 controller: controller.emailController,
+                keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Email',
@@ -59,7 +60,7 @@ class AddEmployeeView extends GetView<AddEmployeeController> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  if (controller.formKey.currentState!.validate()) {
+                  if (controller.employeeFormKey.currentState!.validate()) {
                     controller.addEmployee();
                   } else {
                     Get.defaultDialog(
