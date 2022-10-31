@@ -13,8 +13,10 @@ dependencies:
     sdk: flutter
   firebase_auth: ^4.1.0
   cloud_firestore: ^4.0.3
+  dart_extensions: ^2.2.0
 
 dev_dependencies: 
+  dart_code_metrics: ^4.21.3
   flutter_lints: ^2.0.0
   flutter_test: 
     sdk: flutter

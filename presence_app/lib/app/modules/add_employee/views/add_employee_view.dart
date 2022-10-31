@@ -17,42 +17,63 @@ class AddEmployeeView extends GetView<AddEmployeeController> {
           horizontal: 24,
           vertical: 30,
         ),
-        child: Column(
-          children: [
-            TextFormField(
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'NIP',
+        child: Form(
+          key: controller.formKey,
+          child: Column(
+            children: [
+              TextFormField(
+                validator: (value) =>
+                    value!.isEmpty ? 'Please enter NIP' : null,
+                controller: controller.nipController,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'NIP',
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Name',
+              const SizedBox(
+                height: 16,
               ),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            TextFormField(
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Email',
+              TextFormField(
+                validator: (value) =>
+                    value!.isEmpty ? 'Please enter name' : null,
+                controller: controller.nameController,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Name',
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 50,
-            ),
-            ElevatedButton(
-              onPressed: () {},
-              child: const Text(
-                "Add Employee",
+              const SizedBox(
+                height: 16,
               ),
-            ),
-          ],
+              TextFormField(
+                validator: (value) =>
+                    value!.isEmpty ? 'Please enter email' : null,
+                controller: controller.emailController,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Email',
+                ),
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  if (controller.formKey.currentState!.validate()) {
+                    controller.addEmployee();
+                  } else {
+                    Get.defaultDialog(
+                      title: 'Something Wrong',
+                      middleText: 'Please fill all the form',
+                    );
+                  }
+                },
+                child: const Text(
+                  'Add Employee',
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

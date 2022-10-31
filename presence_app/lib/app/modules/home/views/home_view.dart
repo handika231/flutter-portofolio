@@ -9,24 +9,18 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: () {
-              Get.toNamed(Routes.ADD_EMPLOYEE);
-            },
-            icon: const Icon(Icons.add_box_sharp),
-          )
-        ],
-        title: const Text('HomeView'),
-        centerTitle: true,
-      ),
-      body: const Center(
-        child: Text(
-          'HomeView is working',
-          style: TextStyle(fontSize: 20),
+        appBar: AppBar(
+          actions: [
+            IconButton(
+              onPressed: () {
+                Get.toNamed(Routes.ADD_EMPLOYEE);
+              },
+              icon: const Icon(Icons.add_box_sharp),
+            )
+          ],
+          title: const Text('HomeView'),
+          centerTitle: true,
         ),
-      ),
-    );
+        body: Container());
   }
 }
