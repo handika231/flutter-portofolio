@@ -58,21 +58,30 @@ class AddEmployeeView extends GetView<AddEmployeeController> {
               const SizedBox(
                 height: 50,
               ),
-              ElevatedButton(
-                onPressed: () {
-                  if (controller.employeeFormKey.currentState!.validate()) {
-                    controller.addEmployee();
-                  } else {
-                    Get.defaultDialog(
-                      title: 'Something Wrong',
-                      middleText: 'Please fill all the form',
-                    );
-                  }
+              Obx(
+                () {
+                  return controller.isLoading.value
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : ElevatedButton(
+                          onPressed: () {
+                            if (controller.employeeFormKey.currentState!
+                                .validate()) {
+                              controller.addEmployee();
+                            } else {
+                              Get.defaultDialog(
+                                title: 'Something Wrong',
+                                middleText: 'Please fill all the form',
+                              );
+                            }
+                          },
+                          child: const Text(
+                            'Add Employee',
+                          ),
+                        );
                 },
-                child: const Text(
-                  'Add Employee',
-                ),
-              ),
+              )
             ],
           ),
         ),

@@ -3,11 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:presence_app/app/routes/app_pages.dart';
 
+import '../../../data/db/pref_helper.dart';
+
 class LoginController extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   //form key
-  final loginFormKey = GlobalKey<FormState>();
+  final loginForm = GlobalKey<FormState>();
   @override
   void onClose() {
     emailController.dispose();
@@ -19,18 +21,13 @@ class LoginController extends GetxController {
 
   Future login(String email, String password) async {
     try {
-      UserCredential userCredential = await auth.signInWithEmailAndPassword(
+      await auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      if (userCredential.user!.emailVerified) {
-        Get.offAllNamed(Routes.HOME);
-      } else {
-        Get.defaultDialog(
-          title: 'Error! Email Verification',
-          middleText: 'Please check your email to continue login',
-        );
-      }
+      PrefHelper.setLogin(true);
+
+      Get.offAllNamed(Routes.HOME);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         Get.defaultDialog(

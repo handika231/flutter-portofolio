@@ -22,7 +22,7 @@ class LoginView extends GetView<LoginController> {
         centerTitle: true,
       ),
       body: Form(
-        key: controller.loginFormKey,
+        key: controller.loginForm,
         child: ListView(
           padding: const EdgeInsets.all(20),
           children: [
@@ -54,7 +54,7 @@ class LoginView extends GetView<LoginController> {
             ),
             ElevatedButton(
               onPressed: () {
-                if (controller.loginFormKey.currentState!.validate()) {
+                if (controller.loginForm.currentState!.validate()) {
                   controller.login(
                     controller.emailController.text,
                     controller.passwordController.text,

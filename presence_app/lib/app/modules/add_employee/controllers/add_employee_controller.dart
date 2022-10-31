@@ -7,7 +7,10 @@ class AddEmployeeController extends GetxController {
   late TextEditingController emailController;
   late TextEditingController nameController;
   late TextEditingController nipController;
-  final employeeFormKey = GlobalKey<FormState>();
+  GlobalKey<FormState> employeeFormKey =
+      GlobalKey<FormState>(debugLabel: 'Employee');
+
+  RxBool isLoading = false.obs;
 
   @override
   void onInit() {
@@ -30,6 +33,7 @@ class AddEmployeeController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   Future addEmployee() async {
     try {
+      isLoading = true.obs;
       UserCredential userCredential =
           await _auth.createUserWithEmailAndPassword(
         email: emailController.text,
@@ -43,9 +47,9 @@ class AddEmployeeController extends GetxController {
         'uid': uid,
         'createdAt': DateTime.now().toIso8601String(),
       });
+
       //send email verification
-      await userCredential.user!.sendEmailVerification();
-      Get.back();
+      isLoading = false.obs;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         Get.defaultDialog(

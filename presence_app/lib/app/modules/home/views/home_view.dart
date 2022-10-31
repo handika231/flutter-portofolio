@@ -18,7 +18,13 @@ class HomeView extends GetView<HomeController> {
               Get.offAllNamed(Routes.LOGIN);
             },
             icon: const Icon(Icons.add_box_sharp),
-          )
+          ),
+          IconButton(
+            onPressed: () async {
+              Get.offAllNamed(Routes.ADD_EMPLOYEE);
+            },
+            icon: const Icon(Icons.add),
+          ),
         ],
         title: const Text('HomeView'),
         centerTitle: true,
