@@ -1,19 +1,28 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presence_app/app/data/db/pref_helper.dart';
 import 'package:presence_app/app/routes/app_pages.dart';
 
 import '../controllers/home_controller.dart';
 
-class HomeView extends GetView<HomeController> {
-  const HomeView({Key? key}) : super(key: key);
+class HomeView extends StatelessWidget {
+  final controller = Get.put(HomeController());
+  HomeView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          controller.increment();
+        },
+        child: const Icon(Icons.add),
+      ),
       appBar: AppBar(
         actions: [
           IconButton(
             onPressed: () async {
+              PrefHelper.setLogin(false);
               await FirebaseAuth.instance.signOut();
               Get.offAllNamed(Routes.LOGIN);
             },
@@ -21,7 +30,7 @@ class HomeView extends GetView<HomeController> {
           ),
           IconButton(
             onPressed: () async {
-              Get.offAllNamed(Routes.ADD_EMPLOYEE);
+              Get.toNamed(Routes.ADD_EMPLOYEE);
             },
             icon: const Icon(Icons.add),
           ),
@@ -29,7 +38,14 @@ class HomeView extends GetView<HomeController> {
         title: const Text('HomeView'),
         centerTitle: true,
       ),
-      body: Container(),
+      body: Center(
+        child: Obx(
+          () => Text(
+            controller.count.value.toString(),
+            style: const TextStyle(fontSize: 30),
+          ),
+        ),
+      ),
     );
   }
 }

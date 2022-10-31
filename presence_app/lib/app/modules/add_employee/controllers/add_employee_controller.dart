@@ -10,8 +10,6 @@ class AddEmployeeController extends GetxController {
   GlobalKey<FormState> employeeFormKey =
       GlobalKey<FormState>(debugLabel: 'Employee');
 
-  RxBool isLoading = false.obs;
-
   @override
   void onInit() {
     super.onInit();
@@ -33,7 +31,6 @@ class AddEmployeeController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   Future addEmployee() async {
     try {
-      isLoading = true.obs;
       UserCredential userCredential =
           await _auth.createUserWithEmailAndPassword(
         email: emailController.text,
@@ -49,7 +46,6 @@ class AddEmployeeController extends GetxController {
       });
 
       //send email verification
-      isLoading = false.obs;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         Get.defaultDialog(

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presence_app/app/data/db/pref_helper.dart';
-import 'package:presence_app/app/modules/home/views/home_view.dart';
-import 'package:presence_app/app/modules/login/views/login_view.dart';
 import 'package:presence_app/app/routes/app_pages.dart';
 
+import 'modules/home/views/home_view.dart';
 import 'modules/login/controllers/login_controller.dart';
+import 'modules/login/views/login_view.dart';
 
 class Application extends StatefulWidget {
   const Application({super.key});
@@ -38,8 +38,8 @@ class _ApplicationState extends State<Application> {
       ),
       debugShowCheckedModeBanner: false,
       title: 'Presence App',
-      home: isLogin ? const HomeView() : const LoginView(),
       getPages: AppPages.routes,
+      home: isLogin ? HomeView() : const LoginView(),
     );
   }
 }
