@@ -11,10 +11,10 @@ class LoginController extends GetxController {
   //form key
   final loginForm = GlobalKey<FormState>();
   @override
-  void onClose() {
+  void dispose() {
     emailController.dispose();
     passwordController.dispose();
-    super.onClose();
+    super.dispose();
   }
 
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -41,11 +41,5 @@ class LoginController extends GetxController {
         );
       }
     }
-  }
-
-  Future logout() async {
-    await auth.signOut();
-    PrefHelper.setLogin(false);
-    Get.offAllNamed(Routes.LOGIN);
   }
 }

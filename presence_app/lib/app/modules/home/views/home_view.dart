@@ -12,12 +12,6 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          authController.logout();
-        },
-        child: const Icon(Icons.add),
-      ),
       appBar: AppBar(
         actions: [
           IconButton(
