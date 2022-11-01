@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presence_app/app/routes/app_pages.dart';
 
 import '../controllers/profile_controller.dart';
 
@@ -52,7 +53,9 @@ class ProfileView extends GetView<ProfileController> {
                   height: 24,
                 ),
                 ListTile(
-                  onTap: () {},
+                  onTap: () {
+                    Get.toNamed(Routes.UPDATE_PROFILE, arguments: user);
+                  },
                   title: const Text('Update Profile'),
                   leading: const Icon(Icons.person),
                 ),
@@ -63,7 +66,9 @@ class ProfileView extends GetView<ProfileController> {
                 ),
                 user?['role'] == 'admin'
                     ? ListTile(
-                        onTap: () {},
+                        onTap: () {
+                          Get.toNamed(Routes.ADD_EMPLOYEE);
+                        },
                         leading: const Icon(Icons.add_reaction),
                         title: const Text('Add Pegawai'),
                       )

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presence_app/app/modules/login/controllers/login_controller.dart';
@@ -12,6 +13,13 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          FirebaseAuth.instance.signOut();
+          Get.offAllNamed(Routes.LOGIN);
+        },
+        child: const Icon(Icons.logout),
+      ),
       appBar: AppBar(
         actions: [
           IconButton(

@@ -31,6 +31,7 @@ class AddEmployeeController extends GetxController {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   Future addEmployee() async {
     try {
+      User? currentUser = _auth.currentUser;
       UserCredential userCredential =
           await _auth.createUserWithEmailAndPassword(
         email: emailController.text,
@@ -45,6 +46,11 @@ class AddEmployeeController extends GetxController {
         'role': 'employee',
         'createdAt': DateTime.now().toIso8601String(),
       });
+      await _auth.signOut();
+      await _auth.signInWithEmailAndPassword(
+        email: currentUser!.email!,
+        password: 'password',
+      );
 
       //send email verification
     } on FirebaseAuthException catch (e) {

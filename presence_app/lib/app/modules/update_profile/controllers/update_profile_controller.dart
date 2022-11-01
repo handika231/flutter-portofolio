@@ -1,23 +1,38 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class UpdateProfileController extends GetxController {
-  //TODO: Implement UpdateProfileController
+  final GlobalKey<FormState> formKey =
+      GlobalKey<FormState>(debugLabel: 'form update profile');
 
-  final count = 0.obs;
+  TextEditingController nameController = TextEditingController();
+  TextEditingController nipController = TextEditingController();
+  FirebaseAuth auth = FirebaseAuth.instance;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
   @override
-  void onInit() {
-    super.onInit();
+  void dispose() {
+    nameController.dispose();
+    nipController.dispose();
+    super.dispose();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  Future updateProfile() async {
+    if (formKey.currentState!.validate()) {
+      //update profile
+      String uid = auth.currentUser!.uid;
+      await firestore.collection('employee').doc(uid).update({
+        'name': nameController.text,
+      });
+      Get.defaultDialog(
+        title: 'Success',
+        middleText: 'Profile has been updated',
+        onConfirm: () {
+          Get.back();
+          Get.back();
+        },
+      );
+    }
   }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

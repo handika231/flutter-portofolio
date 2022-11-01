@@ -61,8 +61,11 @@ class AddEmployeeView extends GetView<AddEmployeeController> {
               ElevatedButton(
                 onPressed: () async {
                   if (controller.employeeFormKey.currentState!.validate()) {
-                    await controller.addEmployee();
-                    Get.back();
+                    controller.addEmployee().then((value) {
+                      if (value) {
+                        Get.back();
+                      }
+                    });
                   } else {
                     Get.defaultDialog(
                       title: 'Something Wrong',
