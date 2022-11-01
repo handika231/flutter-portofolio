@@ -42,6 +42,7 @@ class AddEmployeeController extends GetxController {
         'nip': nipController.text,
         'email': emailController.text,
         'uid': uid,
+        'role': 'employee',
         'createdAt': DateTime.now().toIso8601String(),
       });
 

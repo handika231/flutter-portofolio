@@ -42,4 +42,10 @@ class LoginController extends GetxController {
       }
     }
   }
+
+  Future logout() async {
+    await auth.signOut();
+    PrefHelper.setLogin(false);
+    Get.offAllNamed(Routes.LOGIN);
+  }
 }

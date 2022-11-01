@@ -1,39 +1,33 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presence_app/app/data/db/pref_helper.dart';
+import 'package:presence_app/app/modules/login/controllers/login_controller.dart';
 import 'package:presence_app/app/routes/app_pages.dart';
 
 import '../controllers/home_controller.dart';
 
 class HomeView extends StatelessWidget {
   final controller = Get.put(HomeController());
+  final authController = Get.find<LoginController>();
   HomeView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          controller.increment();
+          authController.logout();
         },
         child: const Icon(Icons.add),
       ),
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () async {
-              PrefHelper.setLogin(false);
-              await FirebaseAuth.instance.signOut();
-              Get.offAllNamed(Routes.LOGIN);
+            onPressed: () {
+              Get.toNamed(Routes.PROFILE);
             },
-            icon: const Icon(Icons.add_box_sharp),
-          ),
-          IconButton(
-            onPressed: () async {
-              Get.toNamed(Routes.ADD_EMPLOYEE);
-            },
-            icon: const Icon(Icons.add),
-          ),
+            icon: const Icon(
+              Icons.person,
+            ),
+          )
         ],
         title: const Text('HomeView'),
         centerTitle: true,
