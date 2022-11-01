@@ -45,6 +45,55 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
             const SizedBox(
               height: 16,
             ),
+            GetBuilder<UpdateProfileController>(
+              builder: (controller) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          args['profile'] != null
+                              ? ClipOval(
+                                  child: Image.network(
+                                    args['profile'],
+                                    width: 100,
+                                    height: 100,
+                                    fit: BoxFit.cover,
+                                  ),
+                                )
+                              : controller.imageFile == null
+                                  ? const FlutterLogo()
+                                  : ClipOval(
+                                      child: Image.file(
+                                        controller.imageFile!,
+                                        width: 100,
+                                        height: 100,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Flexible(
+                      child: TextButton(
+                        onPressed: () {
+                          controller.pickImage();
+                        },
+                        child: const Text('Choose Image'),
+                      ),
+                    )
+                  ],
+                );
+              },
+            ),
+            const SizedBox(
+              height: 24,
+            ),
             ElevatedButton(
               onPressed: () {
                 if (controller.formKey.currentState!.validate()) {
