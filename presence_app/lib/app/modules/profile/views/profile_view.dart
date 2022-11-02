@@ -25,9 +25,11 @@ class ProfileView extends GetView<ProfileController> {
                 Center(
                   child: CircleAvatar(
                     radius: 50,
-                    backgroundImage: NetworkImage(
-                      'https://ui-avatars.com/api/?name=${user?['name']}',
-                    ),
+                    backgroundImage: user?['profile'] == null
+                        ? NetworkImage(
+                            'https://ui-avatars.com/api/?name=${user?['name']}',
+                          )
+                        : NetworkImage(user?['profile']),
                   ),
                 ),
                 const SizedBox(

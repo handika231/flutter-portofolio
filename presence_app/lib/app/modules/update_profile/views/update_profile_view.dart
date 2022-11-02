@@ -64,7 +64,7 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
                                   ),
                                 )
                               : controller.imageFile == null
-                                  ? const FlutterLogo()
+                                  ? const Text('No Image')
                                   : ClipOval(
                                       child: Image.file(
                                         controller.imageFile!,
