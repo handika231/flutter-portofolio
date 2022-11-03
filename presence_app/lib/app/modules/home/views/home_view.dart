@@ -166,7 +166,9 @@ class HomeView extends StatelessWidget {
                       ),
                     ),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Get.toNamed(Routes.ALL_PRESENCE);
+                      },
                       child: const Text('See All'),
                     )
                   ],
