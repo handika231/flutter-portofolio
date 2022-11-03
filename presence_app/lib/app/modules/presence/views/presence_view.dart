@@ -47,10 +47,12 @@ class PresenceView extends GetView<PresenceController> {
               const SizedBox(
                 height: 20,
               ),
-              Text(
-                'Positioned: ${controller.positionNow.value}',
-                style: const TextStyle(fontSize: 20),
-              ),
+              controller.positionNow.value.isEmpty
+                  ? const Text('Belum Absen')
+                  : Text(
+                      'Sudah Absen, Posisi: ${controller.positionNow.value}',
+                      style: const TextStyle(fontSize: 20),
+                    ),
             ],
           ),
         ),

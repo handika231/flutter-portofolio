@@ -65,11 +65,14 @@ class HomeView extends StatelessWidget {
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                        Text(
-                          data?['address'] ?? 'Belum ada lokasi',
-                          softWrap: true,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.w300,
+                        SizedBox(
+                          width: 250,
+                          child: Text(
+                            data?['address'] ?? 'Belum ada lokasi',
+                            softWrap: true,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w300,
+                            ),
                           ),
                         ),
                       ],

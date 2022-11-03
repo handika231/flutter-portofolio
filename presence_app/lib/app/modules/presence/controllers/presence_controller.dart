@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class PresenceController extends GetxController {
   RxString latitude = ''.obs;
@@ -35,6 +36,28 @@ class PresenceController extends GetxController {
     return await Geolocator.getCurrentPosition();
   }
 
+  Future<void> presence(Position position, String address) async {
+    CollectionReference<Map<String, dynamic>> presence = firestore
+        .collection('employee')
+        .doc(auth.currentUser!.uid)
+        .collection('presence');
+    QuerySnapshot<Map<String, dynamic>> snapshot = await presence.get();
+    DateTime now = DateTime.now();
+    String today = DateFormat.yMd().format(now).replaceAll('/', '-');
+    if (snapshot.docs.isEmpty) {
+      presence.doc(today).set({
+        'date': today,
+        'masuk': {
+          'date': today,
+          'latitude': position.latitude,
+          'longitude': position.longitude,
+          'address': address,
+          'time': DateFormat.jm().format(now),
+        }
+      });
+    } else {}
+  }
+
   Future updatePosition() async {
     Position position = await determinePosition();
     latitude.value = position.latitude.toString();
@@ -44,13 +67,14 @@ class PresenceController extends GetxController {
         await placemarkFromCoordinates(position.latitude, position.longitude);
     Placemark place = placemarks[0];
     positionNow.value = '${place.locality}, ${place.administrativeArea}';
+    await presence(position, positionNow.value);
     await firestore.collection('employee').doc(auth.currentUser!.uid).update(
       {
         'positioned': {
           'latitude': latitude.value,
           'longitude': longitude.value,
         },
-        'address': placemarks[0].street,
+        'address': positionNow.value,
       },
     );
     Get.snackbar('Absent Success', 'Your position has been updated');
