@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presence_app/app/modules/home/views/home_view.dart';
+import 'package:presence_app/app/modules/presence/views/presence_view.dart';
 import 'package:presence_app/app/modules/profile/views/profile_view.dart';
 
 class MainController extends GetxController {
@@ -12,12 +13,7 @@ class MainController extends GetxController {
 
   List<Widget> pages = [
     HomeView(),
-    Center(
-      child: IconButton(
-        onPressed: () {},
-        icon: const Icon(Icons.fingerprint),
-      ),
-    ),
+    PresenceView(),
     ProfileView(),
   ];
 }

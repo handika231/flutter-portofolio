@@ -55,9 +55,10 @@ class HomeView extends StatelessWidget {
                       width: 10,
                     ),
                     Column(
+                      mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text(
+                      children: [
+                        const Text(
                           'Welcome',
                           style: TextStyle(
                             fontSize: 20,
@@ -65,10 +66,9 @@ class HomeView extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          'Belum ada lokasi',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
+                          data?['address'] ?? 'Belum ada lokasi',
+                          softWrap: true,
+                          style: const TextStyle(
                             fontWeight: FontWeight.w300,
                           ),
                         ),

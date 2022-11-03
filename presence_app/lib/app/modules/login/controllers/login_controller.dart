@@ -28,7 +28,7 @@ class LoginController extends GetxController {
       PrefHelper.setLogin(true);
       emailController.clear();
       passwordController.clear();
-      Get.offAllNamed(Routes.HOME);
+      Get.offAllNamed(Routes.MAIN);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         Get.defaultDialog(
