@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import '../controllers/main_controller.dart';
 
 class MainView extends GetView<MainController> {
-  const MainView({Key? key}) : super(key: key);
+  MainView({Key? key}) : super(key: key);
+  @override
+  final controller = Get.put(MainController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,11 +30,12 @@ class MainView extends GetView<MainController> {
           ],
         ),
       ),
-      appBar: AppBar(
-        title: const Text('MainView'),
-        centerTitle: true,
+      body: Obx(
+        () => IndexedStack(
+          index: controller.currentIndex.value,
+          children: controller.pages,
+        ),
       ),
-      body: controller.pages[controller.currentIndex.value],
     );
   }
 }

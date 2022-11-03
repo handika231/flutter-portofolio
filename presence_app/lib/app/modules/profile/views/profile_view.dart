@@ -5,7 +5,9 @@ import 'package:presence_app/app/routes/app_pages.dart';
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
-  const ProfileView({Key? key}) : super(key: key);
+  ProfileView({Key? key}) : super(key: key);
+  @override
+  final controller = Get.put(ProfileController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(

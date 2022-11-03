@@ -39,7 +39,7 @@ class _ApplicationState extends State<Application> {
       debugShowCheckedModeBanner: false,
       title: 'Presence App',
       getPages: AppPages.routes,
-      home: isLogin ? const MainView() : const LoginView(),
+      home: isLogin ? MainView() : const LoginView(),
     );
   }
 }

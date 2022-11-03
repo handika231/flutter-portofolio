@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/add_employee/bindings/add_employee_binding.dart';
 import '../modules/add_employee/views/add_employee_view.dart';
+import '../modules/detail_presence/bindings/detail_presence_binding.dart';
+import '../modules/detail_presence/views/detail_presence_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
@@ -38,7 +40,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.PROFILE,
-      page: () => const ProfileView(),
+      page: () => ProfileView(),
       binding: ProfileBinding(),
     ),
     GetPage(
@@ -48,8 +50,13 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.MAIN,
-      page: () => const MainView(),
+      page: () => MainView(),
       binding: MainBinding(),
+    ),
+    GetPage(
+      name: _Paths.DETAIL_PRESENCE,
+      page: () => const DetailPresenceView(),
+      binding: DetailPresenceBinding(),
     ),
   ];
 }

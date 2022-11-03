@@ -18,6 +18,6 @@ class MainController extends GetxController {
         icon: const Icon(Icons.fingerprint),
       ),
     ),
-    const ProfileView(),
+    ProfileView(),
   ];
 }
