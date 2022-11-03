@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:presence_app/app/modules/login/controllers/login_controller.dart';
+import 'package:presence_app/app/routes/app_pages.dart';
 
 import '../controllers/home_controller.dart';
 
 class HomeView extends StatelessWidget {
-  // TODO: PLAYLIST KE - 18
   final controller = Get.put(HomeController());
   final authController = Get.find<LoginController>();
   HomeView({Key? key}) : super(key: key);
@@ -21,8 +21,14 @@ class HomeView extends StatelessWidget {
         centerTitle: true,
       ),
       body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-          stream: controller.fetchDataUser(),
-          builder: (context, snapshot) {
+        stream: controller.fetchDataUser(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting ||
+              snapshot.data == null) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
             Map<String, dynamic>? data = snapshot.data?.data();
 
             return ListView(
@@ -173,73 +179,80 @@ class HomeView extends StatelessWidget {
                   physics: const NeverScrollableScrollPhysics(),
                   itemCount: 5,
                   itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      padding: const EdgeInsets.all(12),
-                      margin: const EdgeInsets.only(
-                        bottom: 16,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                'Masuk',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w700,
+                    return GestureDetector(
+                      onTap: () {
+                        Get.toNamed(Routes.DETAIL_PRESENCE);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        padding: const EdgeInsets.all(12),
+                        margin: const EdgeInsets.only(
+                          bottom: 16,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                const Text(
+                                  'Masuk',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                Text(
+                                  DateFormat.yMMMEd().format(DateTime.now()),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 6,
+                            ),
+                            Text(
+                              DateFormat.jms().format(DateTime.now()),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            const Text(
+                              'Keluar',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 6,
+                            ),
+                            Text(
+                              DateFormat.jms().format(
+                                DateTime.now().add(
+                                  const Duration(hours: 8),
                                 ),
                               ),
-                              Text(
-                                DateFormat.yMMMEd().format(DateTime.now()),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 6,
-                          ),
-                          Text(
-                            DateFormat.jms().format(DateTime.now()),
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w300,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          const Text(
-                            'Keluar',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 6,
-                          ),
-                          Text(
-                            DateFormat.jms().format(
-                              DateTime.now().add(
-                                const Duration(hours: 8),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w300,
                               ),
                             ),
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w300,
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     );
                   },
                 ),
               ],
             );
-          }),
+          }
+        },
+      ),
     );
   }
 }
