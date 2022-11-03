@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presence_app/app/data/db/pref_helper.dart';
+import 'package:presence_app/app/modules/main/views/main_view.dart';
 import 'package:presence_app/app/routes/app_pages.dart';
 
-import 'modules/home/views/home_view.dart';
 import 'modules/login/controllers/login_controller.dart';
 import 'modules/login/views/login_view.dart';
 
@@ -39,7 +39,7 @@ class _ApplicationState extends State<Application> {
       debugShowCheckedModeBanner: false,
       title: 'Presence App',
       getPages: AppPages.routes,
-      home: isLogin ? HomeView() : const LoginView(),
+      home: isLogin ? const MainView() : const LoginView(),
     );
   }
 }

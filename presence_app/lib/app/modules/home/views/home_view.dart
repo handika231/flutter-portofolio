@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:presence_app/app/modules/login/controllers/login_controller.dart';
@@ -7,19 +6,13 @@ import 'package:presence_app/app/routes/app_pages.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends StatelessWidget {
+  // TODO: PLAYLIST KE - 18
   final controller = Get.put(HomeController());
   final authController = Get.find<LoginController>();
   HomeView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          FirebaseAuth.instance.signOut();
-          Get.offAllNamed(Routes.LOGIN);
-        },
-        child: const Icon(Icons.logout),
-      ),
       appBar: AppBar(
         actions: [
           IconButton(
@@ -34,13 +27,8 @@ class HomeView extends StatelessWidget {
         title: const Text('HomeView'),
         centerTitle: true,
       ),
-      body: Center(
-        child: Obx(
-          () => Text(
-            controller.count.value.toString(),
-            style: const TextStyle(fontSize: 30),
-          ),
-        ),
+      body: const Center(
+        child: Text('Home View'),
       ),
     );
   }
