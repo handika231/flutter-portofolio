@@ -4,6 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:presence_app/modules/login/controllers/login_controller.dart';
+import 'package:presence_app/modules/presence/controllers/presence_controller.dart';
 import 'package:presence_app/modules/update_profile/controllers/update_profile_controller.dart';
 import 'package:presence_app/utils/db/pref_helper.dart';
 
@@ -20,6 +21,12 @@ void setupLocator() {
   locator.registerLazySingleton(() => ApplicationController(locator()));
   locator.registerLazySingleton(() => LoginController(locator()));
   locator.registerLazySingleton(() => ImagePicker());
+  locator.registerLazySingleton(
+    () => PresenceController(
+      auth: locator(),
+      firestore: locator(),
+    ),
+  );
   locator.registerLazySingleton(
     () => UpdateProfileController(
       auth: locator(),

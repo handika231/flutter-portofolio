@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:presence_app/common/constant.dart';
-import 'package:presence_app/routes/navigation.dart';
 import 'package:presence_app/utils/db/pref_helper.dart';
 
 import '../../../routes/app_pages.dart';
@@ -22,7 +21,7 @@ class ProfileController extends GetxController {
     return firestore.collection('employee').doc(auth.currentUser!.uid).get();
   }
 
-  Future fetchEmployee() async {
+  Future<void> fetchEmployee() async {
     status(Status.loading);
     try {
       final employee = await getEmployee();
@@ -36,6 +35,6 @@ class ProfileController extends GetxController {
   Future<void> logout() async {
     await auth.signOut();
     pref.setLogin(false);
-    Navigation.navigateToAndRemoveUntil(Routes.LOGIN);
+    Get.offAllNamed(Routes.LOGIN);
   }
 }

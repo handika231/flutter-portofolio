@@ -9,8 +9,9 @@ class PresenceController extends GetxController {
   RxString latitude = ''.obs;
   RxString longitude = ''.obs;
   RxString positionNow = ''.obs;
-  FirebaseAuth auth = FirebaseAuth.instance;
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final FirebaseAuth auth;
+  FirebaseFirestore firestore;
+  PresenceController({required this.auth, required this.firestore});
   Future<Position> determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -59,7 +60,10 @@ class PresenceController extends GetxController {
       QueryDocumentSnapshot<Map<String, dynamic>> doc = snapshot.docs.first;
       if (doc.id == today) {
         if (doc.data().containsKey('pulang')) {
-          Get.snackbar('Error', 'Anda sudah melakukan absensi pulang');
+          Get.defaultDialog(
+            title: 'Anda sudah pulang',
+            middleText: 'Anda sudah melakukan presensi pulang',
+          );
         } else {
           presence.doc(today).update({
             'pulang': {

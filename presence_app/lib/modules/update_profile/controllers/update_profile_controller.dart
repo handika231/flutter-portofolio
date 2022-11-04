@@ -40,7 +40,7 @@ class UpdateProfileController extends GetxController {
     Get.snackbar(
       'Foto Profile sudah diperbarui',
       'Silahkan simpan perubahan',
-      backgroundColor: Colors.lightGreen,
+      backgroundColor: Colors.white,
       colorText: Colors.black,
     );
     update();

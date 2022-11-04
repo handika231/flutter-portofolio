@@ -29,7 +29,7 @@ class ProfileView extends StatelessWidget {
                   ),
                   Center(
                     child: CircleAvatar(
-                      radius: 50,
+                      radius: 100,
                       backgroundImage: controller.user['profile'] == null
                           ? NetworkImage(
                               'https://ui-avatars.com/api/?name=${controller.user['name']}',
@@ -78,7 +78,18 @@ class ProfileView extends StatelessWidget {
                       : const SizedBox(),
                   ListTile(
                     onTap: () {
-                      controller.logout();
+                      Get.defaultDialog(
+                        title: 'Logout',
+                        middleText: 'Are you sure want to logout?',
+                        textConfirm: 'Yes',
+                        textCancel: 'No',
+                        confirmTextColor: Colors.white,
+                        cancelTextColor: Colors.white,
+                        buttonColor: Colors.red,
+                        onConfirm: () {
+                          controller.logout();
+                        },
+                      );
                     },
                     leading: const Icon(Icons.logout),
                     title: const Text('Logout'),

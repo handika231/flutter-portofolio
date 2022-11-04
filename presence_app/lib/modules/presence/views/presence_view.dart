@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presence_app/common/style.dart';
+import 'package:presence_app/injector.dart' as di;
 
 import '../controllers/presence_controller.dart';
 
-class PresenceView extends GetView<PresenceController> {
+class PresenceView extends StatelessWidget {
   PresenceView({Key? key}) : super(key: key);
-  @override
-  final controller = Get.put(PresenceController());
+  final controller = Get.put(di.locator<PresenceController>());
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +25,16 @@ class PresenceView extends GetView<PresenceController> {
                 type: MaterialType.transparency,
                 child: Ink(
                   decoration: BoxDecoration(
-                    border: Border.all(width: 10, color: Colors.deepOrange),
+                    border: Border.all(
+                      width: 10,
+                      color: blueColor,
+                    ),
                     borderRadius: BorderRadius.circular(100),
                     color: Colors.white,
                   ),
                   child: InkWell(
                     borderRadius: BorderRadius.circular(100.0),
-                    onTap: () {
+                    onLongPress: () {
                       controller.updatePosition();
                     },
                     child: const Padding(
@@ -38,7 +42,7 @@ class PresenceView extends GetView<PresenceController> {
                       child: Icon(
                         Icons.fingerprint,
                         size: 100,
-                        color: Colors.red,
+                        color: Colors.blueAccent,
                       ),
                     ),
                   ),
