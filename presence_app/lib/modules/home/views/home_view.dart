@@ -4,12 +4,10 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../../routes/app_pages.dart';
-import '../../login/controllers/login_controller.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends StatelessWidget {
   final controller = Get.put(HomeController());
-  final authController = Get.find<LoginController>();
   HomeView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {

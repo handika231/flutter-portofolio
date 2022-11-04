@@ -3,9 +3,8 @@ import 'package:get/get.dart';
 
 import '../controllers/main_controller.dart';
 
-class MainView extends GetView<MainController> {
+class MainView extends StatelessWidget {
   MainView({Key? key}) : super(key: key);
-  @override
   final controller = Get.put(MainController());
   @override
   Widget build(BuildContext context) {

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presence_app/injector.dart' as di;
 
 import '../../../routes/app_pages.dart';
 import '../controllers/profile_controller.dart';
 
-class ProfileView extends GetView<ProfileController> {
+class ProfileView extends StatelessWidget {
   ProfileView({Key? key}) : super(key: key);
-  @override
-  final controller = Get.put(ProfileController());
+
+  final controller = Get.put(di.locator<ProfileController>());
   @override
   Widget build(BuildContext context) {
     return Scaffold(

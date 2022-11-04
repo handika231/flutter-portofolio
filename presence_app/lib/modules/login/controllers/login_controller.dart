@@ -1,14 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:presence_app/routes/navigation.dart';
+import 'package:presence_app/utils/db/pref_helper.dart';
 
 import '../../../routes/app_pages.dart';
 
 class LoginController extends GetxController {
+  final PrefHelper _pref;
+  LoginController(this._pref);
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   //form key
-  final loginForm = GlobalKey<FormState>();
+  final loginForm = GlobalKey<FormState>(debugLabel: '_loginForm');
   @override
   void dispose() {
     emailController.dispose();
@@ -24,11 +28,10 @@ class LoginController extends GetxController {
         email: email,
         password: password,
       );
-      // PrefHelper.setLogin(true);
-      //TODO: Navigate to home page
+      _pref.setLogin(true);
       emailController.clear();
       passwordController.clear();
-      Get.offAllNamed(Routes.MAIN);
+      Navigation.navigateAReplacement(Routes.MAIN);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         Get.defaultDialog(
