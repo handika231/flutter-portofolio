@@ -55,7 +55,35 @@ class PresenceController extends GetxController {
           'time': DateFormat.jm().format(now),
         }
       });
-    } else {}
+    } else {
+      QueryDocumentSnapshot<Map<String, dynamic>> doc = snapshot.docs.first;
+      if (doc.id == today) {
+        if (doc.data().containsKey('pulang')) {
+          Get.snackbar('Error', 'Anda sudah melakukan absensi pulang');
+        } else {
+          presence.doc(today).update({
+            'pulang': {
+              'date': today,
+              'latitude': position.latitude,
+              'longitude': position.longitude,
+              'address': address,
+              'time': DateFormat.jm().format(now),
+            }
+          });
+        }
+      } else {
+        presence.doc(today).set({
+          'date': today,
+          'masuk': {
+            'date': today,
+            'latitude': position.latitude,
+            'longitude': position.longitude,
+            'address': address,
+            'time': DateFormat.jm().format(now),
+          }
+        });
+      }
+    }
   }
 
   Future updatePosition() async {

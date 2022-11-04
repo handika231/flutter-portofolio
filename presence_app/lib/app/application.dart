@@ -1,34 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:presence_app/app/data/db/pref_helper.dart';
-import 'package:presence_app/app/modules/main/views/main_view.dart';
-import 'package:presence_app/app/routes/app_pages.dart';
+import 'package:presence_app/app/application_controller.dart';
+import 'package:presence_app/injector.dart' as di;
 
-import 'modules/login/controllers/login_controller.dart';
-import 'modules/login/views/login_view.dart';
+import '../modules/login/views/login_view.dart';
+import '../modules/main/views/main_view.dart';
+import '../routes/app_pages.dart';
 
-class Application extends StatefulWidget {
-  const Application({super.key});
+class Application extends StatelessWidget {
+  Application({super.key});
 
-  @override
-  State<Application> createState() => _ApplicationState();
-}
-
-class _ApplicationState extends State<Application> {
-  bool isLogin = false;
-
-  Future checkLogin() async {
-    isLogin = await PrefHelper.isLogin;
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    checkLogin();
-  }
-
-  final controller = Get.put(LoginController());
+  final controller = Get.put(di.locator<ApplicationController>());
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +21,7 @@ class _ApplicationState extends State<Application> {
       debugShowCheckedModeBanner: false,
       title: 'Presence App',
       getPages: AppPages.routes,
-      home: isLogin ? MainView() : const LoginView(),
+      home: controller.isLogin.value ? MainView() : const LoginView(),
     );
   }
 }

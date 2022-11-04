@@ -2,9 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:presence_app/app/modules/login/controllers/login_controller.dart';
-import 'package:presence_app/app/routes/app_pages.dart';
 
+import '../../../routes/app_pages.dart';
+import '../../login/controllers/login_controller.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends StatelessWidget {

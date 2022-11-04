@@ -19,6 +19,9 @@ dependencies:
   intl: ^0.17.0
   geolocator: ^9.0.2
   geocoding: ^2.0.5
+  lottie: ^1.4.3
+  responsive_framework: ^0.2.0
+  get_it: ^7.2.0
 
 dev_dependencies:
   dart_code_metrics: ^4.21.3

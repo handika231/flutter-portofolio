@@ -1,9 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:presence_app/app/routes/app_pages.dart';
 
-import '../../../data/db/pref_helper.dart';
+import '../../../routes/app_pages.dart';
 
 class LoginController extends GetxController {
   TextEditingController emailController = TextEditingController();
@@ -25,7 +24,8 @@ class LoginController extends GetxController {
         email: email,
         password: password,
       );
-      PrefHelper.setLogin(true);
+      // PrefHelper.setLogin(true);
+      //TODO: Navigate to home page
       emailController.clear();
       passwordController.clear();
       Get.offAllNamed(Routes.MAIN);

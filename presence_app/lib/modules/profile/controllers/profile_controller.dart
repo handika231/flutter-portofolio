@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
-import '../../../data/db/pref_helper.dart';
 import '../../../routes/app_pages.dart';
 
 class ProfileController extends GetxController {
@@ -18,7 +17,8 @@ class ProfileController extends GetxController {
 
   Future logout() async {
     await auth.signOut();
-    PrefHelper.setLogin(false);
+    // PrefHelper.setLogin(false);
+    // TODO: Navigate to login page
     Get.offAllNamed(Routes.LOGIN);
   }
 }
