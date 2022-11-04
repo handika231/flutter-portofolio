@@ -1,34 +1,37 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+import 'package:presence_app/common/constant.dart';
+import 'package:presence_app/injector.dart' as di;
 
-import '../../../routes/app_pages.dart';
 import '../controllers/home_controller.dart';
+import '../widgets/last_day_widget.dart';
 
-class HomeView extends StatelessWidget {
-  final controller = Get.put(HomeController());
-  HomeView({Key? key}) : super(key: key);
+class HomeView extends StatefulWidget {
+  const HomeView({Key? key}) : super(key: key);
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  final controller = Get.put(di.locator<HomeController>());
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() => Get.find<HomeController>().fetchEmployee());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home Page'),
-        backgroundColor: Colors.black,
-        foregroundColor: Colors.white,
-        centerTitle: true,
-      ),
-      body: StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-        stream: controller.fetchDataUser(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting ||
-              snapshot.data == null) {
+      body: SafeArea(
+        child: Obx(() {
+          if (controller.status.value == Status.loading) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           } else {
-            Map<String, dynamic>? data = snapshot.data?.data();
-
             return ListView(
               padding: const EdgeInsets.all(20),
               children: [
@@ -40,8 +43,8 @@ class HomeView extends StatelessWidget {
                       decoration: BoxDecoration(
                         image: DecorationImage(
                           image: NetworkImage(
-                            data?['profile'] ??
-                                'https://ui-avatars.com/api/?name=${data?['name']}',
+                            controller.user['profile'] ??
+                                'https://ui-avatars.com/api/?name=${controller.user['name']}',
                           ),
                           fit: BoxFit.cover,
                         ),
@@ -66,7 +69,7 @@ class HomeView extends StatelessWidget {
                         SizedBox(
                           width: 250,
                           child: Text(
-                            data?['address'] ?? 'Belum ada lokasi',
+                            controller.user['address'] ?? 'Belum ada lokasi',
                             softWrap: true,
                             style: const TextStyle(
                               fontWeight: FontWeight.w300,
@@ -90,7 +93,7 @@ class HomeView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${data?['role']}',
+                        '${controller.user['role']}',
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -100,7 +103,7 @@ class HomeView extends StatelessWidget {
                         height: 18,
                       ),
                       Text(
-                        '${data?['nip']}',
+                        '${controller.user['nip']}',
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w700,
@@ -110,7 +113,7 @@ class HomeView extends StatelessWidget {
                         height: 6,
                       ),
                       Text(
-                        'Name: ${data?['name']}',
+                        'Name: ${controller.user['name']}',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
@@ -156,105 +159,11 @@ class HomeView extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'Last 5 Days',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Get.toNamed(Routes.ALL_PRESENCE);
-                      },
-                      child: const Text('See All'),
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 5,
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                      onTap: () {
-                        Get.toNamed(Routes.DETAIL_PRESENCE);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.grey[300],
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        padding: const EdgeInsets.all(12),
-                        margin: const EdgeInsets.only(
-                          bottom: 16,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text(
-                                  'Masuk',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                                Text(
-                                  DateFormat.yMMMEd().format(DateTime.now()),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 6,
-                            ),
-                            Text(
-                              DateFormat.jms().format(DateTime.now()),
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w300,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            const Text(
-                              'Keluar',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 6,
-                            ),
-                            Text(
-                              DateFormat.jms().format(
-                                DateTime.now().add(
-                                  const Duration(hours: 8),
-                                ),
-                              ),
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w300,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
+                const LastDayWidget(),
               ],
             );
           }
-        },
+        }),
       ),
     );
   }

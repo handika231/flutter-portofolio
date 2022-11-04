@@ -34,7 +34,7 @@ class ProfileController extends GetxController {
 
   Future<void> logout() async {
     await auth.signOut();
-    pref.setLogin(false);
+    await pref.setLogin(false);
     Get.offAllNamed(Routes.LOGIN);
   }
 }

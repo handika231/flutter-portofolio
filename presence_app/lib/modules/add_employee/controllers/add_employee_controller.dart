@@ -7,6 +7,12 @@ class AddEmployeeController extends GetxController {
   late TextEditingController emailController;
   late TextEditingController nameController;
   late TextEditingController nipController;
+
+  //form key
+  final FirebaseAuth auth;
+  FirebaseFirestore firestore;
+  AddEmployeeController({required this.firestore, required this.auth});
+
   GlobalKey<FormState> employeeFormKey =
       GlobalKey<FormState>(debugLabel: 'Employee');
 
@@ -26,14 +32,10 @@ class AddEmployeeController extends GetxController {
     nipController.dispose();
   }
 
-  //form key
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-  Future addEmployee() async {
+  Future<void> addEmployee() async {
     try {
-      User? currentUser = _auth.currentUser;
-      UserCredential userCredential =
-          await _auth.createUserWithEmailAndPassword(
+      User? currentUser = auth.currentUser;
+      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
         email: emailController.text,
         password: 'password',
       );
@@ -46,13 +48,20 @@ class AddEmployeeController extends GetxController {
         'role': 'employee',
         'createdAt': DateTime.now().toIso8601String(),
       });
-      await _auth.signOut();
-      await _auth.signInWithEmailAndPassword(
+      await auth.signOut();
+      await auth.signInWithEmailAndPassword(
         email: currentUser!.email!,
         password: 'password',
       );
-
-      //send email verification
+      Get.defaultDialog(
+        title: 'Success',
+        middleText: 'Employee has been added',
+        textConfirm: 'OK',
+        onConfirm: () {
+          Get.back();
+          Get.back();
+        },
+      );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         Get.defaultDialog(

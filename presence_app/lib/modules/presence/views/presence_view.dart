@@ -37,12 +37,12 @@ class PresenceView extends StatelessWidget {
                     onLongPress: () {
                       controller.updatePosition();
                     },
-                    child: const Padding(
-                      padding: EdgeInsets.all(30.0),
+                    child: Padding(
+                      padding: const EdgeInsets.all(30.0),
                       child: Icon(
                         Icons.fingerprint,
                         size: 100,
-                        color: Colors.blueAccent,
+                        color: blueColor,
                       ),
                     ),
                   ),
@@ -53,9 +53,13 @@ class PresenceView extends StatelessWidget {
               ),
               controller.positionNow.value.isEmpty
                   ? const Text('Belum Absen')
-                  : Text(
-                      'Sudah Absen, Posisi: ${controller.positionNow.value}',
-                      style: const TextStyle(fontSize: 20),
+                  : Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: Text(
+                        'Sudah Absen, Posisi: ${controller.positionNow.value}',
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(fontSize: 20),
+                      ),
                     ),
             ],
           ),
