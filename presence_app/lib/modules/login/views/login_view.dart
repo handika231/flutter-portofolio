@@ -18,80 +18,82 @@ class LoginView extends StatelessWidget {
           key: controller.loginForm,
           child: Padding(
             padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Container(
-                  margin: const EdgeInsets.symmetric(
-                    vertical: 24,
-                  ),
-                  child: const Text(
-                    'Login Page',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w300,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                      vertical: 24,
+                    ),
+                    child: const Text(
+                      'Login Page',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w300,
+                      ),
                     ),
                   ),
-                ),
-                Image.asset(
-                  'login'.toPNG,
-                  height: 250,
-                  fit: BoxFit.contain,
-                ),
-                const SizedBox(
-                  height: 24,
-                ),
-                TextFormField(
-                  validator: (value) =>
-                      value!.isEmpty ? 'Please enter Email' : null,
-                  controller: controller.emailController,
-                  keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    labelText: 'Email',
+                  Image.asset(
+                    'login'.toPNG,
+                    height: 250,
+                    fit: BoxFit.contain,
                   ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextFormField(
-                  validator: (value) =>
-                      value!.isEmpty ? 'Please enter Passsword' : null,
-                  controller: controller.passwordController,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    labelText: 'Password',
+                  const SizedBox(
+                    height: 24,
                   ),
-                ),
-                const SizedBox(
-                  height: 50,
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(double.infinity, 50),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                  TextFormField(
+                    validator: (value) =>
+                        value!.isEmpty ? 'Please enter Email' : null,
+                    controller: controller.emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      labelText: 'Email',
                     ),
                   ),
-                  onPressed: () {
-                    if (controller.loginForm.currentState!.validate()) {
-                      controller.login(
-                        controller.emailController.text,
-                        controller.passwordController.text,
-                      );
-                    }
-                  },
-                  child: const Text(
-                    'Login',
+                  const SizedBox(
+                    height: 20,
                   ),
-                ),
-              ],
+                  TextFormField(
+                    validator: (value) =>
+                        value!.isEmpty ? 'Please enter Passsword' : null,
+                    controller: controller.passwordController,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      labelText: 'Password',
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 50,
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    onPressed: () {
+                      if (controller.loginForm.currentState!.validate()) {
+                        controller.login(
+                          controller.emailController.text,
+                          controller.passwordController.text,
+                        );
+                      }
+                    },
+                    child: const Text(
+                      'Login',
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

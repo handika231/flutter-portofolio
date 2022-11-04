@@ -8,30 +8,48 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UpdateProfileController extends GetxController {
+  final FirebaseAuth auth;
+  final FirebaseFirestore firestore;
+  final ImagePicker picker;
+  final FirebaseStorage storage;
+
+  UpdateProfileController(
+      {required this.auth,
+      required this.firestore,
+      required this.picker,
+      required this.storage});
   final GlobalKey<FormState> formKey =
       GlobalKey<FormState>(debugLabel: 'form update profile');
 
-  TextEditingController nameController = TextEditingController();
-  TextEditingController nipController = TextEditingController();
-  FirebaseAuth auth = FirebaseAuth.instance;
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  late TextEditingController nameController;
+  late TextEditingController nipController;
+
+  @override
+  void onInit() {
+    super.onInit();
+    nameController = TextEditingController();
+    nipController = TextEditingController();
+  }
+
   File? imageFile;
 
   Future pickImage() async {
-    final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
-    if (image != null) {
-      imageFile = File(image.path);
-    } else {
-      debugPrint('No image selected.');
-    }
+    if (image == null) return;
+    imageFile = File(image.path);
+    Get.snackbar(
+      'Foto Profile sudah diperbarui',
+      'Silahkan simpan perubahan',
+      backgroundColor: Colors.lightGreen,
+      colorText: Colors.black,
+    );
     update();
   }
 
   Future uploadImage() async {
     if (imageFile != null) {
       final String fileName = auth.currentUser!.uid;
-      final Reference ref = FirebaseStorage.instance.ref().child(fileName);
+      final Reference ref = storage.ref().child(fileName);
       final UploadTask uploadTask = ref.putFile(imageFile!);
       final TaskSnapshot downloadUrl = (await uploadTask);
       final String url = (await downloadUrl.ref.getDownloadURL());
@@ -47,9 +65,8 @@ class UpdateProfileController extends GetxController {
     super.dispose();
   }
 
-  Future updateProfile() async {
+  Future<void> updateProfile() async {
     if (formKey.currentState!.validate()) {
-      //update profile
       String uid = auth.currentUser!.uid;
       String profile = await uploadImage();
       await firestore.collection('employee').doc(uid).update({
@@ -57,12 +74,17 @@ class UpdateProfileController extends GetxController {
         'profile': profile,
       });
       Get.defaultDialog(
-        title: 'Success',
-        middleText: 'Profile has been updated',
-        onConfirm: () {
-          Get.back();
-          Get.back();
-        },
+        title: 'Berhasil',
+        actions: [
+          TextButton(
+            onPressed: () {
+              Get.back();
+              Get.back();
+            },
+            child: const Text('OK'),
+          ),
+        ],
+        middleText: 'Profile kamu sudah di perbarui',
       );
     }
   }

@@ -1,27 +1,41 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:presence_app/common/constant.dart';
 import 'package:presence_app/routes/navigation.dart';
 import 'package:presence_app/utils/db/pref_helper.dart';
 
 import '../../../routes/app_pages.dart';
 
 class ProfileController extends GetxController {
-  final PrefHelper _pref;
-  ProfileController(this._pref);
-  FirebaseAuth auth = FirebaseAuth.instance;
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-
-  Stream<DocumentSnapshot<Map<String, dynamic>>> getEmployee() {
-    return firestore
-        .collection('employee')
-        .doc(auth.currentUser!.uid)
-        .snapshots();
+  final PrefHelper pref;
+  final FirebaseAuth auth;
+  final FirebaseFirestore firestore;
+  Rx<Status> status = Status.loading.obs;
+  RxMap user = {}.obs;
+  ProfileController(
+      {required this.pref, required this.auth, required this.firestore}) {
+    fetchEmployee();
   }
 
-  Future logout() async {
+  Future<DocumentSnapshot<Map<String, dynamic>>> getEmployee() {
+    return firestore.collection('employee').doc(auth.currentUser!.uid).get();
+  }
+
+  Future fetchEmployee() async {
+    status(Status.loading);
+    try {
+      final employee = await getEmployee();
+      user(employee.data()!);
+      status(Status.success);
+    } catch (e) {
+      status(Status.error);
+    }
+  }
+
+  Future<void> logout() async {
     await auth.signOut();
-    _pref.setLogin(false);
+    pref.setLogin(false);
     Navigation.navigateToAndRemoveUntil(Routes.LOGIN);
   }
 }

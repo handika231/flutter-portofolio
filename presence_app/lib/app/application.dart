@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:presence_app/app/application_controller.dart';
 import 'package:presence_app/common/style.dart';
 import 'package:presence_app/injector.dart' as di;
-import 'package:presence_app/routes/navigation.dart';
+import 'package:presence_app/routes/app_pages.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 import '../modules/login/views/login_view.dart';
@@ -16,6 +16,7 @@ class Application extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      getPages: AppPages.routes,
       theme: ThemeData(
         colorScheme: ColorScheme.light(
           primary: blueColor,
@@ -34,7 +35,6 @@ class Application extends StatelessWidget {
           ],
         );
       },
-      navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       title: 'Presence App',
       home: controller.isLogin.value ? MainView() : LoginView(),

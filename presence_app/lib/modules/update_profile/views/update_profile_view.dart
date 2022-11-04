@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:presence_app/injector.dart' as di;
 
 import '../controllers/update_profile_controller.dart';
 
-class UpdateProfileView extends GetView<UpdateProfileController> {
+class UpdateProfileView extends StatelessWidget {
   final args = Get.arguments;
   UpdateProfileView({Key? key}) : super(key: key);
+  final controller = Get.put(di.locator<UpdateProfileController>());
   @override
   Widget build(BuildContext context) {
     controller.nameController.text = args['name'];
     controller.nipController.text = args['nip'];
     return Scaffold(
       appBar: AppBar(
-        title: const Text('UpdateProfileView'),
+        title: const Text('Update Profile'),
         centerTitle: true,
       ),
       body: Form(
@@ -46,7 +48,7 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
               height: 16,
             ),
             GetBuilder<UpdateProfileController>(
-              builder: (controller) {
+              builder: (value) {
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -63,11 +65,11 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
                                     fit: BoxFit.cover,
                                   ),
                                 )
-                              : controller.imageFile == null
+                              : value.imageFile == null
                                   ? const Text('No Image')
                                   : ClipOval(
                                       child: Image.file(
-                                        controller.imageFile!,
+                                        value.imageFile!,
                                         width: 100,
                                         height: 100,
                                         fit: BoxFit.cover,
@@ -82,7 +84,7 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
                     Flexible(
                       child: TextButton(
                         onPressed: () {
-                          controller.pickImage();
+                          value.pickImage();
                         },
                         child: const Text('Choose Image'),
                       ),
@@ -92,9 +94,15 @@ class UpdateProfileView extends GetView<UpdateProfileController> {
               },
             ),
             const SizedBox(
-              height: 24,
+              height: 50,
             ),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding: const EdgeInsets.symmetric(vertical: 16),
+              ),
               onPressed: () {
                 if (controller.formKey.currentState!.validate()) {
                   controller.updateProfile();
