@@ -1,0 +1,16 @@
+{
+"id": 19,
+"title": "The Ultimate MySQL Bootcamp: Go from SQL Beginner to Expert",
+"photo": "http://localhost/udemy/ebookapp/image/1628743464_mysql.jpg",
+"description": "<p>The&nbsp;<em>MySQL&reg; Notes for Professionals</em>&nbsp;book is compiled from&nbsp;<a href=\"https://archive.org/details/documentation-dump.7z\" target=\"_blank\">Stack Overflow Documentation</a>, the content is written by the beautiful people at Stack Overflow. Text content is released under Creative Commons BY-SA. See credits at the end of this book whom contributed to the various chapters. Images may be copyright of their respective owners unless otherwise specified</p>\r\n\r\n<p>Book created for educational purposes and is not affiliated with MySQL&reg; group(s), company(s) nor Stack Overflow. All trademarks belong to their respective company owners</p>\r\n\r\n<p>199 pages, published on May 2018</p>\r\n",
+"cat_id": 1,
+"status_news": 1,
+"pdf": "http://localhost/udemy/ebookapp/ebook/sample_MySQLNotesForProfessionals.pdf",
+"date": "2021-08-09 15:17:22",
+"author_name": "Paul D. Leedy",
+"publisher_name": "Springer",
+"pages": 100,
+"language": "English",
+"rating": 0,
+"free": 1
+}
