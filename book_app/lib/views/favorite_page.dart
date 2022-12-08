@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class HomeView extends StatelessWidget {
-  const HomeView({super.key});
+class FavoritePage extends StatelessWidget {
+  const FavoritePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const SafeArea(
       child: Center(
-        child: Text('Home View'),
+        child: Text('Favorite View'),
       ),
     );
   }
