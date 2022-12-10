@@ -87,28 +87,29 @@ class HomeView extends GetView<HomeController> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
-      child: IntrinsicHeight(
-        child: Row(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: Image.network(
-                data.image ?? 'https://via.placeholder.com/150',
-                fit: BoxFit.cover,
-                height: 180,
-                width: 150,
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            child: Image.network(
+              data.image ?? 'https://via.placeholder.com/150',
+              fit: BoxFit.cover,
+              height: 180,
+              width: 150,
+            ),
+          ),
+          const SizedBox(
+            width: 16,
+          ),
+          Flexible(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                right: 16,
+                top: 16,
               ),
-            ),
-            const SizedBox(
-              width: 16,
-            ),
-            Flexible(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(
-                    height: 12,
-                  ),
                   Text(
                     '${data.title}',
                     style: const TextStyle(
@@ -176,9 +177,9 @@ class HomeView extends GetView<HomeController> {
                   ),
                 ],
               ),
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }

@@ -3,4 +3,5 @@ class Routes {
   // source: https://oflutter.com/flutter-what-is-private-constructor-2022/
   static const String home = '/';
   static const String splash = '/splash';
+  static const String detail = '/detail';
 }
