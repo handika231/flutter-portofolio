@@ -31,6 +31,7 @@ class _SplashViewState extends State<SplashView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppStyle.whiteColor,
       body: Stack(
         children: [
           Center(
@@ -44,9 +45,12 @@ class _SplashViewState extends State<SplashView> {
             bottom: 20,
             left: 0,
             right: 0,
-            child: SpinKitFadingCircle(
-              color: AppStyle.primaryColor,
-              size: 50.0,
+            child: Hero(
+              tag: 'spinner',
+              child: SpinKitFadingCircle(
+                color: AppStyle.primaryColor,
+                size: 50.0,
+              ),
             ),
           )
         ],
