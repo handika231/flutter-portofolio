@@ -1,3 +1,4 @@
+import 'package:book_app/model/category_model/category_model.dart';
 import 'package:book_app/model/ebook_model/ebook_model.dart';
 import 'package:book_app/utils/api_service.dart';
 import 'package:book_app/utils/result_state.dart';
@@ -42,6 +43,8 @@ class MainNotifier extends ChangeNotifier {
   ResultState state = ResultState.noData;
   List<EbookModel> listOfSliders = [];
   List<EbookModel> listOfLatest = [];
+  List<EbookModel> listOfComing = [];
+  List<CategoryModel> listOfCategory = [];
   String message = '';
 
   Future<void> getSlider() async {
@@ -69,6 +72,40 @@ class MainNotifier extends ChangeNotifier {
       result.fold(
         (failure) => message = failure.message,
         (data) => listOfLatest = data,
+      );
+      state = ResultState.hasData;
+      notifyListeners();
+    } catch (e) {
+      state = ResultState.error;
+      notifyListeners();
+    }
+  }
+
+  Future<void> getComing() async {
+    try {
+      state = ResultState.loading;
+      notifyListeners();
+      final result = await service.fetchComing();
+      result.fold(
+        (failure) => message = failure.message,
+        (data) => listOfComing = data,
+      );
+      state = ResultState.hasData;
+      notifyListeners();
+    } catch (e) {
+      state = ResultState.error;
+      notifyListeners();
+    }
+  }
+
+  Future<void> getCategory() async {
+    try {
+      state = ResultState.loading;
+      notifyListeners();
+      final result = await service.fetchCategory();
+      result.fold(
+        (failure) => message = failure.message,
+        (data) => listOfCategory = data,
       );
       state = ResultState.hasData;
       notifyListeners();

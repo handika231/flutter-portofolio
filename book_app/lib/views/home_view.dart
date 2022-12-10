@@ -21,6 +21,8 @@ class _HomeViewState extends State<HomeView> {
     Future.microtask(() {
       Provider.of<MainNotifier>(context, listen: false).getSlider();
       Provider.of<MainNotifier>(context, listen: false).getLatest();
+      Provider.of<MainNotifier>(context, listen: false).getComing();
+      Provider.of<MainNotifier>(context, listen: false).getCategory();
     });
   }
 
@@ -49,21 +51,16 @@ class _HomeViewState extends State<HomeView> {
                       background: _buildSlider(value),
                     ),
                   ),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Text(
-                        'Latest',
-                        style: TextStyle(
-                          fontSize: 18.sp,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
-                  ),
+                  sliverTitle('Latest'),
                   SliverToBoxAdapter(
                     child: _buildLatest(value),
                   ),
+                  sliverTitle('Coming Soon'),
+                  SliverToBoxAdapter(
+                    child: _buildComing(value),
+                  ),
+                  sliverTitle('Category', isCategory: true),
+                  _buildGrid(value),
                 ],
               );
             default:
@@ -74,7 +71,67 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  Column _buildSlider(MainNotifier value) {
+  SliverGrid _buildGrid(MainNotifier value) {
+    return SliverGrid(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 10,
+        childAspectRatio: 0.7,
+      ),
+      delegate: SliverChildBuilderDelegate(
+        (context, index) {
+          return Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: NetworkImage(
+                  value.listOfCategory[index].photoCat ?? '',
+                ),
+                fit: BoxFit.cover,
+              ),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Center(
+              child: Text(
+                value.listOfCategory[index].name ?? '',
+                style: TextStyle(
+                  shadows: [
+                    Shadow(
+                      color: Colors.black.withOpacity(0.5),
+                      blurRadius: 5,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                  color: Colors.black,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 16.sp,
+                ),
+              ),
+            ),
+          );
+        },
+        childCount: value.listOfCategory.length,
+      ),
+    );
+  }
+
+  SliverToBoxAdapter sliverTitle(String title, {bool isCategory = false}) {
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Text(
+          title,
+          textAlign: isCategory ? TextAlign.center : TextAlign.start,
+          style: TextStyle(
+            fontSize: 18.sp,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSlider(MainNotifier value) {
     return Column(
       children: [
         SizedBox(
@@ -157,7 +214,7 @@ class _HomeViewState extends State<HomeView> {
     );
   }
 
-  SizedBox _buildLatest(MainNotifier value) {
+  Widget _buildLatest(MainNotifier value) {
     return SizedBox(
       height: 225.h,
       child: ListView.builder(
@@ -209,6 +266,48 @@ class _HomeViewState extends State<HomeView> {
               ),
             );
           }
+        },
+      ),
+    );
+  }
+
+  Widget _buildComing(MainNotifier value) {
+    return Container(
+      color: Colors.grey[200],
+      height: 225.h,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: value.listOfComing.length,
+        itemBuilder: (context, index) {
+          EbookModel ebook = value.listOfComing[index];
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Image.network(
+                  ebook.photo ?? '',
+                  width: 150.w,
+                  height: 150.h,
+                  alignment: Alignment.centerLeft,
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                SizedBox(
+                  width: 150.w,
+                  child: Text(
+                    ebook.title ?? '',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w300,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
+          );
         },
       ),
     );

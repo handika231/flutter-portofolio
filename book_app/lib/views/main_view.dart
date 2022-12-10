@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../controller/main_notifier.dart';
@@ -17,6 +18,8 @@ class MainView extends StatelessWidget {
       ),
       bottomNavigationBar: Consumer<MainNotifier>(
         builder: (context, value, child) => NavigationBar(
+          height: 55.h,
+          animationDuration: const Duration(milliseconds: 250),
           destinations: value.destination,
           selectedIndex: value.currentIndex,
           onDestinationSelected: value.changeIndex,
