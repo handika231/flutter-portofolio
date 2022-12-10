@@ -1,0 +1,3 @@
+class AppStyle {
+  AppStyle._();
+}
