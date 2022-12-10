@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:news_app/views/home_view.dart';
+import 'package:news_app/routes/app_routes.dart';
+import 'package:news_app/routes/name_routes.dart';
 
 class Application extends StatelessWidget {
   const Application({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const GetMaterialApp(
+    return GetMaterialApp(
       title: 'News App',
       debugShowCheckedModeBanner: false,
-      home: HomeView(),
+      initialRoute: Routes.splash,
+      getPages: AppRoutes.pages,
     );
   }
 }
