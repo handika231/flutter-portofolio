@@ -8,10 +8,13 @@ class MainView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<MainNotifier>(context, listen: false);
-    print('BUILD');
+    Provider.of<MainNotifier>(context, listen: false);
     return Scaffold(
-      body: provider.views[provider.currentIndex],
+      body: Consumer<MainNotifier>(
+        builder: (context, value, child) {
+          return value.views[value.currentIndex];
+        },
+      ),
       bottomNavigationBar: Consumer<MainNotifier>(
         builder: (context, value, child) => NavigationBar(
           destinations: value.destination,
