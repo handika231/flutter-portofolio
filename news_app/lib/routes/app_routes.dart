@@ -21,7 +21,7 @@ class AppRoutes {
     ),
     GetPage(
       name: Routes.detail,
-      page: () => const DetailView(),
+      page: () => DetailView(),
       binding: DetailBinding(),
     ),
   ];

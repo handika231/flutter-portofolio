@@ -42,7 +42,7 @@ class _SplashViewState extends State<SplashView> {
             ),
           ),
           const Positioned(
-            bottom: 20,
+            bottom: 50,
             left: 0,
             right: 0,
             child: Hero(

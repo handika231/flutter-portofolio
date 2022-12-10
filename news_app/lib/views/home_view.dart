@@ -4,6 +4,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:news_app/controller/home/home_controller.dart';
 import 'package:news_app/model/news_model.dart';
+import 'package:news_app/routes/name_routes.dart';
 import 'package:news_app/style/app_style.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -91,11 +92,14 @@ class HomeView extends GetView<HomeController> {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(16),
-            child: Image.network(
-              data.image ?? 'https://via.placeholder.com/150',
-              fit: BoxFit.cover,
-              height: 180,
-              width: 150,
+            child: Hero(
+              tag: data.id.toString(),
+              child: Image.network(
+                data.image ?? 'https://via.placeholder.com/150',
+                fit: BoxFit.cover,
+                height: 180,
+                width: 150,
+              ),
             ),
           ),
           const SizedBox(
@@ -170,7 +174,9 @@ class HomeView extends GetView<HomeController> {
                     style: TextButton.styleFrom(
                       padding: EdgeInsets.zero,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.toNamed(Routes.detail, arguments: data);
+                    },
                     child: const Text(
                       "Selengkapnya...",
                     ),
