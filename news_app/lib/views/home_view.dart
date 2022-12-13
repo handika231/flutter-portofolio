@@ -59,7 +59,12 @@ class HomeView extends GetView<HomeController> {
                                     size: 12,
                                   ),
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  Get.toNamed(
+                                    Routes.category,
+                                    arguments: category.slug,
+                                  );
+                                },
                                 label: Text(
                                   category.name ?? '',
                                   style: const TextStyle(

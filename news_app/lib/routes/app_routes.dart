@@ -28,7 +28,7 @@ class AppRoutes {
     ),
     GetPage(
       name: Routes.category,
-      page: () => const CategoryDetail(),
+      page: () => CategoryDetail(),
       binding: CategoryBinding(),
     ),
   ];
