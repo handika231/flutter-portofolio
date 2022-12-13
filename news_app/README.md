@@ -1,5 +1,12 @@
 # Beritakan (News App)
 
+
+<div align="center">
+    <img src="assets/logo.png" width="150px">
+</div>
+​
+
+
 ### Description
 Project A news application made using Flutter as the front end and using an API created using Laravel.
 
