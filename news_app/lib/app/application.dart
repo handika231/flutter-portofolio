@@ -9,7 +9,7 @@ class Application extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'News App',
+      title: 'Beritakan',
       debugShowCheckedModeBanner: false,
       initialRoute: Routes.splash,
       getPages: AppRoutes.pages,
