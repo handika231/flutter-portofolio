@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
 import 'package:news_app/model/category_model.dart';
 import 'package:news_app/services/api_service.dart';
@@ -14,6 +17,11 @@ class HomeController extends GetxController {
     'assets/slider/slider4.jpg',
     'assets/slider/slider5.jpg'
   ];
+
+  Connectivity connectivity = Connectivity();
+  Stream<ConnectivityResult> get connectivityStream =>
+      connectivity.onConnectivityChanged;
+
   RxInt currentIndex = 0.obs;
   final CarouselController controller = CarouselController();
   final newsList = <NewsModel>[].obs;

@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
@@ -12,6 +13,41 @@ class HomeView extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    return StreamBuilder(
+      builder: (context, snapshot) {
+        if (snapshot.data == ConnectivityResult.none) {
+          return _buildConnectionFail();
+        } else {
+          return _buildHasConnection(context);
+        }
+      },
+      stream: controller.connectivityStream,
+    );
+  }
+
+  _buildConnectionFail() {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              'Pastikan anda tersambung dengan internet',
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Image.asset(
+              'assets/no-internet.png',
+              height: 300,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  _buildHasConnection(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
