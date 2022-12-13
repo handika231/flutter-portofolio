@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:get/get.dart';
+import 'package:news_app/model/category_model.dart';
 import 'package:news_app/services/api_service.dart';
 
 import '../../model/news_model.dart';
@@ -16,6 +17,7 @@ class HomeController extends GetxController {
   RxInt currentIndex = 0.obs;
   final CarouselController controller = CarouselController();
   final newsList = <NewsModel>[].obs;
+  final categoryList = <CategoryModel>[].obs;
   onPageChange(int index, CarouselPageChangedReason reason) {
     currentIndex.value = index;
   }
@@ -27,6 +29,18 @@ class HomeController extends GetxController {
         newsList.assignAll(news);
       }
       return newsList;
+    } catch (err) {
+      throw Exception(err);
+    }
+  }
+
+  Future<List<CategoryModel>> fetchAllCategory() async {
+    try {
+      final category = await service.fetchAllCategory();
+      if (category.isNotEmpty) {
+        categoryList.assignAll(category);
+      }
+      return categoryList;
     } catch (err) {
       throw Exception(err);
     }

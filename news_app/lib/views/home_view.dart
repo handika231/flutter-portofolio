@@ -29,6 +29,41 @@ class HomeView extends GetView<HomeController> {
               const SizedBox(
                 height: 16,
               ),
+              FutureBuilder(
+                future: controller.fetchAllCategory(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: SpinKitFadingCircle(
+                        color: Colors.lightBlue,
+                        size: 30.0,
+                      ),
+                    );
+                  } else {
+                    return Padding(
+                      padding: const EdgeInsets.only(
+                        left: 24,
+                      ),
+                      child: Wrap(
+                        spacing: 8,
+                        children: controller.categoryList
+                            .map(
+                              (category) => ActionChip(
+                                onPressed: () {},
+                                label: Text(
+                                  category.name ?? '',
+                                ),
+                              ),
+                            )
+                            .toList(),
+                      ),
+                    );
+                  }
+                },
+              ),
+              const SizedBox(
+                height: 16,
+              ),
               Obx(
                 () => _buildCarousel(context),
               ),
@@ -108,8 +143,8 @@ class HomeView extends GetView<HomeController> {
           Flexible(
             child: Padding(
               padding: const EdgeInsets.only(
-                right: 16,
                 top: 16,
+                right: 16,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,13 +191,15 @@ class HomeView extends GetView<HomeController> {
                       const SizedBox(
                         width: 4,
                       ),
-                      Text(
-                        '${data.createdAt}',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: AppStyle.light,
+                      Flexible(
+                        child: Text(
+                          '${data.createdAt}',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: AppStyle.light,
+                          ),
                         ),
                       ),
                     ],
@@ -232,8 +269,8 @@ class HomeView extends GetView<HomeController> {
             return GestureDetector(
               onTap: () => controller.controller.animateToPage(entry.key),
               child: Container(
-                width: 12.0,
-                height: 12.0,
+                width: 8.0,
+                height: 8.0,
                 margin:
                     const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
                 decoration: BoxDecoration(
