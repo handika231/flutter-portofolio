@@ -49,9 +49,24 @@ class HomeView extends GetView<HomeController> {
                         children: controller.categoryList
                             .map(
                               (category) => ActionChip(
+                                backgroundColor: AppStyle.primaryColor,
+                                avatar: CircleAvatar(
+                                  backgroundColor:
+                                      AppStyle.primaryColor.withOpacity(0.5),
+                                  child: const Icon(
+                                    Icons.home,
+                                    color: Colors.white,
+                                    size: 12,
+                                  ),
+                                ),
                                 onPressed: () {},
                                 label: Text(
                                   category.name ?? '',
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: AppStyle.light,
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             )
