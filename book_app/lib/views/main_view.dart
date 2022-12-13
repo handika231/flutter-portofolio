@@ -1,3 +1,5 @@
+import 'package:book_app/common/app_style.dart';
+import 'package:book_app/common/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +13,21 @@ class MainView extends StatelessWidget {
   Widget build(BuildContext context) {
     Provider.of<MainNotifier>(context, listen: false);
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: AppStyle.whiteColor,
+        title: const Text(
+          'Hello Kawan',
+          style: TextStyle(
+            fontWeight: AppStyle.bold,
+            color: AppStyle.blackColor,
+          ),
+        ),
+        leading: Image.asset(
+          'register'.toPNG,
+          height: 50,
+        ),
+      ),
       body: Consumer<MainNotifier>(
         builder: (context, value, child) {
           return value.views[value.currentIndex];

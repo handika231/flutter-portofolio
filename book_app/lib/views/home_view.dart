@@ -44,10 +44,9 @@ class _HomeViewState extends State<HomeView> {
               return CustomScrollView(
                 slivers: <Widget>[
                   SliverAppBar(
-                    backgroundColor: Colors.transparent,
+                    backgroundColor: Colors.white,
                     expandedHeight: 250.h,
                     flexibleSpace: FlexibleSpaceBar(
-                      titlePadding: EdgeInsets.zero,
                       background: _buildSlider(value),
                     ),
                   ),
@@ -272,8 +271,7 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Widget _buildComing(MainNotifier value) {
-    return Container(
-      color: Colors.grey[200],
+    return SizedBox(
       height: 225.h,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
